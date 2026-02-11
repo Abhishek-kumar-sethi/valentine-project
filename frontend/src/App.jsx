@@ -1,29 +1,19 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import Home from './Home'
-import ValentineForm from './form'
-import ValentineLanding from './valentine'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./Home"
+import ValentineForm from "./ValentineForm"
+import ValentineLanding from "./valentine"
+import ResponsePage from "./ResponsePage"
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home')
-
-  useEffect(() => {
-    // Check if URL has valentine hash
-    if (window.location.hash.includes('valentine=')) {
-      setCurrentPage('valentine')
-    }
-  }, [])
-
   return (
-    <div className="app">
-      {currentPage === 'valentine' ? (
-        <ValentineLanding />
-      ) : currentPage === 'form' ? (
-        <ValentineForm onBack={() => setCurrentPage('home')} />
-      ) : (
-        <Home onCreateClick={() => setCurrentPage('form')} />
-      )}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/create" element={<ValentineForm />} />
+        <Route path="/valentine/:data" element={<ValentineLanding />} />
+        <Route path="/response/:data" element={<ResponsePage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
